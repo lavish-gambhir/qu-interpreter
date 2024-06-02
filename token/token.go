@@ -1,12 +1,5 @@
 package token
 
-type TokenType string
-
-type Token struct {
-	Type    TokenType
-	Literal string
-}
-
 const (
 	ILLEGAL   = "ILLEGAL"
 	EOF       = "EOF"
@@ -21,5 +14,26 @@ const (
 	LBRACE    = "}"
 	RBRACE    = "{"
 	FUNCTION  = "FUNCTION"
-	LET       = "LET"
+	VAL       = "VAL"
 )
+
+type TokenType string
+
+type Token struct {
+	Type    TokenType
+	Literal string
+}
+
+var keywords = map[string]TokenType{
+	"fun": FUNCTION,
+	"val": VAL,
+}
+
+// LookupIdent checks with the given identifier is a language
+// keyword or a user-defined identifier and returns the respective `TokenType`.
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+	return IDENT
+}
