@@ -1,20 +1,40 @@
 package token
 
 const (
-	ILLEGAL   = "ILLEGAL"
-	EOF       = "EOF"
-	IDENT     = "IDENT"
-	INT       = "INT"
-	ASSIGN    = "="
-	PLUS      = "+"
-	COMMA     = "-"
+	ILLEGAL = "ILLEGAL"
+	EOF     = "EOF"
+
+	IDENT = "IDENT"
+	INT   = "INT"
+
+	// Operators
+	ASSIGN   = "="
+	PLUS     = "+"
+	MINUS    = "-"
+	BANG     = "!"
+	ASTERISK = "*"
+	SLASH    = "/"
+
+	LT     = "<"
+	GT     = ">"
+	EQ     = "=="
+	NOT_EQ = "!="
+
+	COMMA     = ","
 	SEMICOLON = ";"
-	LPAREN    = ")"
-	RPAREN    = "("
-	LBRACE    = "}"
-	RBRACE    = "{"
-	FUNCTION  = "FUNCTION"
-	VAL       = "VAL"
+
+	LPAREN = "("
+	RPAREN = ")"
+	LBRACE = "{"
+	RBRACE = "}"
+
+	FUNCTION = "FUNCTION"
+	VAL      = "VAL"
+	TRUE     = "TRUE"
+	FALSE    = "FALSE"
+	IF       = "IF"
+	ELSE     = "ELSE"
+	RETURN   = "RETURN"
 )
 
 type TokenType string
@@ -25,8 +45,13 @@ type Token struct {
 }
 
 var keywords = map[string]TokenType{
-	"fun": FUNCTION,
-	"val": VAL,
+	"fun":    FUNCTION,
+	"val":    VAL,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
 // LookupIdent checks with the given identifier is a language
