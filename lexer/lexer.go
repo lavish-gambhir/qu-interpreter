@@ -21,7 +21,13 @@ func (l *Lexer) NextToken() token.Token {
 	currentChar := l.ch
 	switch l.ch {
 	case '=':
-		tok = newToken(token.ASSIGN, currentChar)
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			tok = token.Token{Type: token.EQ, Literal: string(ch) + string(l.ch)}
+		} else {
+			tok = newToken(token.ASSIGN, currentChar)
+		}
 	case ';':
 		tok = newToken(token.SEMICOLON, currentChar)
 	case '(':
@@ -39,7 +45,13 @@ func (l *Lexer) NextToken() token.Token {
 	case '-':
 		tok = newToken(token.MINUS, currentChar)
 	case '!':
-		tok = newToken(token.BANG, currentChar)
+		if l.peekChar() == '=' {
+			ch := l.ch
+			l.readChar()
+			tok = token.Token{Type: token.NOT_EQ, Literal: string(ch) + string(l.ch)}
+		} else {
+			tok = newToken(token.BANG, currentChar)
+		}
 	case '/':
 		tok = newToken(token.SLASH, currentChar)
 	case '*':
@@ -103,6 +115,14 @@ func (l *Lexer) readNumber() string {
 		l.readChar()
 	}
 	return l.input[position:l.position]
+}
+
+// peekChar takes a peek at the next character.
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	}
+	return l.input[l.readPosition]
 }
 
 func isLetter(ch byte) bool {
